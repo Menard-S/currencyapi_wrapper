@@ -28,6 +28,7 @@ module CurrencyApiClient
       response = client.get('currencies') do |req|
         req.params['apikey'] = Rails.application.credentials.currencyapi[:api_key]
       end
+      Rails.logger.debug "Raw API response: #{response.body.inspect}"
       if response.success?
         begin
           data = JSON.parse(response.body)
