@@ -1,0 +1,38 @@
+<div class="container mt-4 d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+  <h2><i class="fas fa-exchange-alt"></i> Currency Converter</h2>
+
+  <% if flash[:conversion_rate] %>
+    <div class="alert alert-success w-100" style="max-width: 400px;" role="alert">
+      <h4 class="alert-heading">Conversion Rate:</h4>
+      <p><%= flash[:conversion_rate] %></p>
+    </div>
+  <% elsif flash[:error] %>
+    <div class="alert alert-danger w-100" style="max-width: 400px;" role="alert">
+      <p><%= flash[:error] %></p>
+    </div>
+  <% end %>
+
+  <div class="w-100 d-flex justify-content-center">
+    <%= form_with(url: convert_path, method: :post, local: true, class: "needs-validation", novalidate: true, style: "max-width: 400px; width: 100%;") do |form| %>
+      <div class="card p-4 shadow">
+        <div class="mb-3">
+          <%= form.label :amount, '<i class="fas fa-dollar-sign"></i> Amount to Convert'.html_safe, class: "form-label" %>
+          <%= form.number_field :amount, step: '0.01', required: true, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :source_currency, '<i class="fas fa-arrow-alt-circle-left"></i> Convert from'.html_safe, class: "form-label" %>
+          <%= form.select :source_currency, options_for_select(@currencies.map { |code, name| [name, code] }), { include_blank: 'Select Currency' }, required: true, class: "form-select" %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :target_currency, '<i class="fas fa-arrow-alt-circle-right"></i> Convert to'.html_safe, class: "form-label" %>
+          <%= form.select :target_currency, options_for_select(@currencies.map { |code, name| [name, code] }), { include_blank: 'Select Currency' }, required: true, class: "form-select" %>
+        </div>
+        <div class="actions">
+          <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+            <i class="fas fa-sync-alt"></i> Convert
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
