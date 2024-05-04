@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+ @media (max-width: 767px) {
+    .responsive-width {
+      max-width: 100%;
+      width: 100%;
+    }
+    .form-control, .form-select {
+      font-size: 16px;
+    }
+    .btn {
+      padding: 10px 24px;
+    }
+  }
+  
