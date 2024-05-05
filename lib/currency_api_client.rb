@@ -46,6 +46,28 @@ module CurrencyApiClient
         Rails.logger.error "Failed to fetch currencies: Status #{response.status}"
         {}
       end
-    end    
+    end
+    
+    def self.historical_rates(dates, source, target)
+      rates = {}
+      dates.each do |date|
+        Rails.logger.debug "Fetching historical rate for #{date}"
+        response = client.get('historical') do |req|
+          req.params['apikey'] = Rails.application.credentials.currencyapi[:api_key]
+          req.params['date'] = date
+          req.params['base_currency'] = source
+          req.params['currencies'] = target
+        end
+        if response.success?
+          result = JSON.parse(response.body)
+          rate = result['data'] && result['data'][target] ? result['data'][target]['value'].to_f.round(2) : nil
+          rates[date] = rate
+        else
+          Rails.logger.error "Failed to fetch historical rate for #{date}: Status #{response.status}"
+          rates[date] = nil
+        end
+      end
+      rates
+    end       
   end
   

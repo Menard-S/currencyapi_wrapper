@@ -9,5 +9,5 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   root 'currencies#index'
-  post 'convert', to: 'currencies#convert'
+  post '/convert', to: 'currencies#convert', as: 'convert'
 end

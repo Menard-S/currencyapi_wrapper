@@ -4,11 +4,22 @@
   <% if flash[:conversion_rate] %>
     <div class="alert alert-success w-100" style="max-width: 400px;" role="alert">
       <h4 class="alert-heading">Conversion Rate:</h4>
-      <p><%= flash[:conversion_rate] %></p>
+      <p><%= number_with_delimiter(flash[:conversion_rate]) %></p>
     </div>
   <% elsif flash[:error] %>
     <div class="alert alert-danger w-100" style="max-width: 400px;" role="alert">
       <p><%= flash[:error] %></p>
+    </div>
+  <% end %>
+
+  <% if flash[:historical_rates] %>
+    <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
+      <h4 class="alert-heading">Historical Rates:</h4>
+      <ul>
+        <% flash[:historical_rates].split(", ").each do |rate| %>
+          <li><%= number_with_delimiter(rate) %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
