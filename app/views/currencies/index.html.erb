@@ -1,9 +1,9 @@
 <div class="container mt-4 d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
-  <h2><i class="fas fa-exchange-alt"></i>ExchangeGO</h2>
+  <h2><i class="fas fa-globe-americas"></i> ExchangeGO</h2>
 
   <% if flash[:conversion_rate] %>
     <div class="alert alert-success w-100" style="max-width: 400px;" role="alert">
-      <h4 class="alert-heading">Conversion Rate:</h4>
+      <h4 class="alert-heading"><i class="fas fa-exchange-alt"></i> Conversion Rate:</h4>
       <p><%= number_with_delimiter(flash[:conversion_rate]) %></p>
     </div>
   <% elsif flash[:error] %>
@@ -12,14 +12,10 @@
     </div>
   <% end %>
 
-  <% if flash[:historical_rates] %>
+  <% if flash[:latest_rate] %>
     <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
-      <h4 class="alert-heading">Historical Rates:</h4>
-      <ul>
-        <% flash[:historical_rates].split(", ").each do |rate| %>
-          <li><%= number_with_delimiter(rate) %></li>
-        <% end %>
-      </ul>
+      <h4 class="alert-heading"><i class="fas fa-sync-alt"></i> Latest Rate:</h4>
+      <p><%= number_with_delimiter(flash[:latest_rate]) %></p>
     </div>
   <% end %>
 
@@ -27,7 +23,7 @@
     <%= form_with(url: convert_path, method: :post, local: true, class: "needs-validation", novalidate: true, style: "max-width: 400px; width: 100%;") do |form| %>
       <div class="card p-4 shadow">
         <div class="mb-3">
-          <%= form.label :amount, '<i class="fas fa-dollar-sign"></i> Amount to Convert'.html_safe, class: "form-label" %>
+          <%= form.label :amount, '<i class="fas fa-money-bill-wave"></i> Amount to Convert'.html_safe, class: "form-label" %>
           <%= form.number_field :amount, step: '0.01', required: true, class: "form-control" %>
         </div>
         <div class="mb-3">
@@ -46,4 +42,16 @@
       </div>
     <% end %>
   </div>
+
+    <% if flash[:historical_rates] %>
+    <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
+      <h4 class="alert-heading"><i class="fas fa-history"></i> Historical Rates:</h4>
+      <ul>
+        <% flash[:historical_rates].split(", ").each do |rate| %>
+          <li><%= number_with_delimiter(rate) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 </div>

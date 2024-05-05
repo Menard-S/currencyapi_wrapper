@@ -47,7 +47,29 @@ module CurrencyApiClient
         {}
       end
     end
-    
+
+    def self.latest_rate(source, target)
+      Rails.logger.debug "Fetching latest rate for #{source} to #{target}"
+      response = client.get('latest') do |req|
+        req.params['apikey'] = Rails.application.credentials.currencyapi[:api_key]
+        req.params['base_currency'] = source
+        req.params['currencies'] = target
+      end
+      Rails.logger.debug "API response for latest #{source} to #{target}: #{response.body}"
+      if response.success?
+        result = JSON.parse(response.body)
+        if result['data'] && result['data'][target]
+          result['data'][target]['value'].to_f.round(2)
+        else
+          Rails.logger.error "Failed to fetch latest rate for #{source} to #{target}: #{result['data']}"
+          nil
+        end
+      else
+        Rails.logger.error "Failed to fetch latest rate for #{source} to #{target}: Status #{response.status}"
+        nil
+      end
+    end    
+
     def self.historical_rates(dates, source, target)
       rates = {}
       dates.each do |date|
