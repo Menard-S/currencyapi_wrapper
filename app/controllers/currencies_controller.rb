@@ -1,6 +1,5 @@
 class CurrenciesController < ApplicationController
   def index
-    Rails.logger.debug "Entering index action"
     @currencies = CurrencyApiClient.supported_currencies
     if @currencies.empty?
       flash[:alert] = "Failed to load currency data. Please try again later."
