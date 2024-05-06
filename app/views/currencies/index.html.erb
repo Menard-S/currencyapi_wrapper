@@ -12,13 +12,6 @@
     </div>
   <% end %>
 
-  <% if flash[:latest_rate] %>
-    <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
-      <h4 class="alert-heading"><i class="fas fa-sync-alt"></i> Latest Rate:</h4>
-      <p><%= number_with_delimiter(flash[:latest_rate]) %></p>
-    </div>
-  <% end %>
-
   <div class="w-100 d-flex justify-content-center">
     <%= form_with(url: convert_path, method: :post, local: true, class: "needs-validation", novalidate: true, style: "max-width: 400px; width: 100%;") do |form| %>
       <div class="card p-4 shadow">
@@ -43,6 +36,13 @@
     <% end %>
   </div>
 
+ <% if flash[:latest_rate] %>
+    <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
+      <h4 class="alert-heading"><i class="fas fa-sync-alt"></i> Latest Rate:</h4>
+      <p><%= number_with_delimiter(flash[:latest_rate]) %></p>
+    </div>
+  <% end %>
+
     <% if flash[:historical_rates] %>
     <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
       <h4 class="alert-heading"><i class="fas fa-history"></i> Historical Rates:</h4>
@@ -53,5 +53,4 @@
       </ul>
     </div>
   <% end %>
-
 </div>
