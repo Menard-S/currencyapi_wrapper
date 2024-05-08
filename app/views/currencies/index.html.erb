@@ -36,14 +36,14 @@
     <% end %>
   </div>
 
- <% if flash[:latest_rate] %>
+  <% if flash[:latest_rate] %>
     <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
       <h4 class="alert-heading"><i class="fas fa-sync-alt"></i> Latest Rate:</h4>
       <p><%= number_with_delimiter(flash[:latest_rate]) %></p>
     </div>
   <% end %>
 
-    <% if flash[:historical_rates] %>
+  <% if flash[:historical_rates] %>
     <div class="alert alert-info w-100" style="max-width: 400px;" role="alert">
       <h4 class="alert-heading"><i class="fas fa-history"></i> Historical Rates:</h4>
       <ul>
